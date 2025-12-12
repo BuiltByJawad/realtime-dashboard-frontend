@@ -131,12 +131,13 @@ export default function AnalyticsPage() {
                     <CartesianGrid
                       stroke="rgba(148,163,184,0.25)"
                       vertical={false}
-                      fill="#020617"
-                      fillOpacity={1}
                     />
                     <XAxis dataKey="status" stroke="#94a3b8" />
                     <YAxis allowDecimals={false} stroke="#94a3b8" />
-                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <ChartTooltip
+                      content={<ChartTooltipContent />}
+                      cursor={{ fill: 'rgba(148,163,184,0.1)' }}
+                    />
                     <Bar dataKey="count">
                       {overview?.byStatus?.map((s) => (
                         <Cell
@@ -185,7 +186,10 @@ export default function AnalyticsPage() {
                         />
                       ))}
                     </Pie>
-                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <ChartTooltip
+                      content={<ChartTooltipContent />}
+                      cursor={{ fill: 'transparent' }}
+                    />
                   </PieChart>
                 </ChartContainer>
               </CardContent>
