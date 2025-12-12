@@ -1,9 +1,9 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from '@/lib/http/baseQuery';
 import {
-  Product,
-  CreateProductInput,
-  UpdateProductInput,
+    Product,
+    CreateProductInput,
+    UpdateProductInput,
 } from '../types';
 
 interface ProductsResponse {
@@ -19,7 +19,7 @@ interface ProductResponse {
 export const productsApi = createApi({
     reducerPath: 'productsApi',
     baseQuery,
-    tagTypes: ['Products'],
+    tagTypes: ['Products', 'Analytics'],
     endpoints: (builder) => ({
         getProducts: builder.query<ProductsResponse, void>({
             query: () => ({
@@ -32,7 +32,7 @@ export const productsApi = createApi({
                         ...result.data.map((p) => ({ type: 'Products' as const, id: p.id })),
                         { type: 'Products' as const, id: 'LIST' },
                     ]
-                : [{ type: 'Products' as const, id: 'LIST' }],
+                    : [{ type: 'Products' as const, id: 'LIST' }],
         }),
         createProduct: builder.mutation<ProductResponse, CreateProductInput>({
             query: (body) => ({
@@ -40,7 +40,7 @@ export const productsApi = createApi({
                 method: 'POST',
                 body,
             }),
-            invalidatesTags: [{ type: 'Products', id: 'LIST' }],
+            invalidatesTags: [{ type: 'Products', id: 'LIST' }, 'Analytics'],
         }),
         updateProduct: builder.mutation<ProductResponse, { id: string; body: UpdateProductInput }>({
             query: ({ id, body }) => ({
@@ -51,6 +51,7 @@ export const productsApi = createApi({
             invalidatesTags: (result, error, arg) => [
                 { type: 'Products', id: arg.id },
                 { type: 'Products', id: 'LIST' },
+                'Analytics',
             ],
         }),
         deleteProduct: builder.mutation<void, string>({
@@ -61,6 +62,7 @@ export const productsApi = createApi({
             invalidatesTags: (result, error, id) => [
                 { type: 'Products', id },
                 { type: 'Products', id: 'LIST' },
+                'Analytics',
             ],
         }),
         changeStatus: builder.mutation<ProductResponse, { id: string; status: 'active' | 'inactive' }>({
@@ -72,6 +74,7 @@ export const productsApi = createApi({
             invalidatesTags: (result, error, arg) => [
                 { type: 'Products', id: arg.id },
                 { type: 'Products', id: 'LIST' },
+                'Analytics',
             ],
         }),
     }),
