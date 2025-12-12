@@ -39,10 +39,10 @@ import {
 
 const createProductSchema = z.object({
   name: z.string().min(1, 'Name is required'),
-  price: z.coerce.number().nonnegative('Price must be non-negative'),
+  price: z.number().nonnegative('Price must be non-negative'),
   status: z.enum(['active', 'inactive']),
   category: z.string().min(1, 'Category is required').optional(),
-  stock: z.coerce.number().int().nonnegative('Stock must be non-negative').optional(),
+  stock: z.number().int().nonnegative('Stock must be non-negative').optional(),
 });
 
 type CreateProductFormValues = z.infer<typeof createProductSchema>;
@@ -349,7 +349,7 @@ export default function ProductsPage() {
                 step="0.01"
                 placeholder="0.00"
                 className="bg-slate-900 border-slate-800 text-slate-100 placeholder:text-slate-500 focus-visible:ring-sky-500 focus-visible:ring-offset-0"
-                {...register('price')}
+                {...register('price', { valueAsNumber: true })}
               />
               {errors.price && (
                 <div className="mt-1 text-xs text-red-300">
@@ -389,7 +389,7 @@ export default function ProductsPage() {
                 type="number"
                 placeholder="0"
                 className="bg-slate-900 border-slate-800 text-slate-100 placeholder:text-slate-500 focus-visible:ring-sky-500 focus-visible:ring-offset-0"
-                {...register('stock')}
+                {...register('stock', { valueAsNumber: true })}
               />
               {errors.stock && (
                 <div className="mt-1 text-xs text-red-300">
@@ -471,7 +471,7 @@ export default function ProductsPage() {
                 id="price"
                 type="number"
                 className="bg-slate-900 border-slate-800 text-slate-100 p-2"
-                {...register('price')}
+                {...register('price', { valueAsNumber: true })}
               />
               {errors.price && (
                 <div className="mt-1 text-xs text-red-300">
@@ -509,7 +509,7 @@ export default function ProductsPage() {
                 id="stock"
                 type="number"
                 className="bg-slate-900 border-slate-800 text-slate-100 p-2"
-                {...register('stock')}
+                {...register('stock', { valueAsNumber: true })}
               />
               {errors.stock && (
                 <div className="mt-1 text-xs text-red-300">
