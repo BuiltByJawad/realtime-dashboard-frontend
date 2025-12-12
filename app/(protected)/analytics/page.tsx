@@ -136,7 +136,7 @@ export default function AnalyticsPage() {
                     <YAxis allowDecimals={false} stroke="#94a3b8" />
                     <ChartTooltip
                       content={<ChartTooltipContent />}
-                      cursor={{ fill: 'rgba(148,163,184,0.1)' }}
+                      cursor={false}
                     />
                     <Bar dataKey="count">
                       {overview?.byStatus?.map((s) => (
@@ -188,7 +188,7 @@ export default function AnalyticsPage() {
                     </Pie>
                     <ChartTooltip
                       content={<ChartTooltipContent />}
-                      cursor={{ fill: 'transparent' }}
+                      cursor={false}
                     />
                   </PieChart>
                 </ChartContainer>
