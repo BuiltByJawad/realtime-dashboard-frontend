@@ -39,10 +39,10 @@ import {
 
 const createProductSchema = z.object({
   name: z.string().min(1, 'Name is required'),
-  price: z.number().nonnegative('Price must be non-negative'),
+  price: z.coerce.number().nonnegative('Price must be non-negative'),
   status: z.enum(['active', 'inactive']),
   category: z.string().min(1, 'Category is required').optional(),
-  stock: z.number().int().nonnegative('Stock must be non-negative').optional(),
+  stock: z.coerce.number().int().nonnegative('Stock must be non-negative').optional(),
 });
 
 type CreateProductFormValues = z.infer<typeof createProductSchema>;

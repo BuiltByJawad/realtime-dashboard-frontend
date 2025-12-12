@@ -5,6 +5,7 @@ import {
     CreateProductInput,
     UpdateProductInput,
 } from '../types';
+import { analyticsApi } from '@/features/analytics/api/analyticsApi';
 
 interface ProductsResponse {
     success: boolean;
@@ -19,7 +20,7 @@ interface ProductResponse {
 export const productsApi = createApi({
     reducerPath: 'productsApi',
     baseQuery,
-    tagTypes: ['Products', 'Analytics'],
+    tagTypes: ['Products'],
     endpoints: (builder) => ({
         getProducts: builder.query<ProductsResponse, void>({
             query: () => ({
@@ -40,7 +41,13 @@ export const productsApi = createApi({
                 method: 'POST',
                 body,
             }),
-            invalidatesTags: [{ type: 'Products', id: 'LIST' }, 'Analytics'],
+            invalidatesTags: [{ type: 'Products', id: 'LIST' }],
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    await queryFulfilled;
+                    dispatch(analyticsApi.util.invalidateTags(['Analytics']));
+                } catch { }
+            },
         }),
         updateProduct: builder.mutation<ProductResponse, { id: string; body: UpdateProductInput }>({
             query: ({ id, body }) => ({
@@ -51,8 +58,13 @@ export const productsApi = createApi({
             invalidatesTags: (result, error, arg) => [
                 { type: 'Products', id: arg.id },
                 { type: 'Products', id: 'LIST' },
-                'Analytics',
             ],
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    await queryFulfilled;
+                    dispatch(analyticsApi.util.invalidateTags(['Analytics']));
+                } catch { }
+            },
         }),
         deleteProduct: builder.mutation<void, string>({
             query: (id) => ({
@@ -62,8 +74,13 @@ export const productsApi = createApi({
             invalidatesTags: (result, error, id) => [
                 { type: 'Products', id },
                 { type: 'Products', id: 'LIST' },
-                'Analytics',
             ],
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    await queryFulfilled;
+                    dispatch(analyticsApi.util.invalidateTags(['Analytics']));
+                } catch { }
+            },
         }),
         changeStatus: builder.mutation<ProductResponse, { id: string; status: 'active' | 'inactive' }>({
             query: ({ id, status }) => ({
@@ -74,8 +91,13 @@ export const productsApi = createApi({
             invalidatesTags: (result, error, arg) => [
                 { type: 'Products', id: arg.id },
                 { type: 'Products', id: 'LIST' },
-                'Analytics',
             ],
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    await queryFulfilled;
+                    dispatch(analyticsApi.util.invalidateTags(['Analytics']));
+                } catch { }
+            },
         }),
     }),
 });
