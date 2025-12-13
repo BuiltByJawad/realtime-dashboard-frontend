@@ -8,8 +8,8 @@ You don’t need to touch any framework boilerplate – the important entry poin
 
 ## Live demo
 
-- Frontend: https://realtime-dashboard-frontend-3njnaqjx0-md-tokey-zawads-projects.vercel.app/login
-- Backend API used by this build: https://realtime-dashboard-backend-5kig.onrender.com/api
+- Frontend: https://realtime-dashboard-frontend-tawny.vercel.app/login
+- Backend: https://realtime-dashboard-backend-5kig.onrender.com/api
 
 ---
 
